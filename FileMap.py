@@ -1,4 +1,5 @@
 #!/usr/bin/python
+import sys
 import json
 from DevFile import map_define
 
@@ -158,10 +159,15 @@ def find_file(filename):
     return maps.find_file(filename)
 
 
-def main():
-    info = maps.get_display_info()
-    print "Dev file maps:\n%s" % json.dumps(info, indent=3)
+def main(argv):
+    if len(argv) == 0 or (len(argv) == 1 and argv[0] == "all"):
+        info = maps.get_display_info()
+        print "Dev file maps:\n%s" % json.dumps(info, indent=3)
+    else:
+        filename = argv[0]
+        file = find_file(filename)
+        print file
 
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv[1:])
