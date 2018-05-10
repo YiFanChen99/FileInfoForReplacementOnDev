@@ -1,58 +1,228 @@
 #!/usr/bin/python
+
+""" Template
+{
+    'name': "Package",
+    'pre_target': "/var/packages/",
+    'pre_source': "/volume1/mnt/",
+    'owner': "user:group",
+    'mod': "755",
+    'elements': [
+        {
+            'name': "notestation.js",
+            'target': "{0}/ui/notestation.js",
+            'owner': "user:group",
+            'mod': "755",
+            'default_source': "{0}/NoteStation/ui/notestation.js"
+        }
+    ]
+}
+"""
+
+
+class Definer(object):
+    @staticmethod
+    def get_define():
+        return {}
+
+
+class DownloadStationDefiner(Definer):
+    @staticmethod
+    def get_define():
+        return {
+            'name': "DownloadStation",
+            'pre_target': "/var/packages/DownloadStation/target",
+            'pre_source': "/volume1/mnt/source",
+            'owner': "DownloadStation:DownloadStation",
+            'mod': "755",
+            'elements': [
+                DownloadStationDefiner.get_define_temp_deving(),
+                {
+                    'name': "download.js",
+                    'target': "{0}/ui/download.js",
+                    'mod': "644",
+                    'default_source': "{0}/DownloadStation/ui/download.js"
+                }, {
+                    'name': "scheduler",
+                    'target': "{0}/sbin/scheduler",
+                    'default_source': "{0}/DownloadStation/scheduler/scheduler"
+                }, {
+                    'name': "transmissiond",
+                    'target': "{0}/sbin/transmissiond",
+                    'default_source': "{0}/transmission-2.8x/daemon/transmission-daemon"
+                }, {
+                    'name': "lftp",
+                    'target': "{0}/bin/lftp",
+                    'default_source': "{0}/lftp-4.x-virtual-DownloadStation/src/lftp"
+                },
+                DownloadStationDefiner.get_define_web_api(),
+                DownloadStationDefiner.get_define_libs(),
+                DownloadStationDefiner.get_define_binary_tool(),
+                DownloadStationDefiner.get_define_youtube()
+            ]
+        }
+
+    @staticmethod
+    def get_define_temp_deving():
+        return {
+            'name': "TempDeving",
+            'elements': [
+            ]
+        }
+
+    @staticmethod
+    def get_define_web_api():
+        task_bt = {
+            'name': "TaskBT",
+            'pre_source': "{0}/task_bt",
+            'elements': [
+                {
+                    'name': "SYNO.DownloadStation2.Task.BT.lib",
+                    'target': "{0}/SYNO.DownloadStation2.Task.BT.lib",
+                    'mod': "644",
+                    'default_source': "{0}/SYNO.DownloadStation2.Task.BT.lib"
+                }, {
+                    'name': "SYNO.DownloadStation2.Task.BT.so",
+                    'target': "{0}/SYNO.DownloadStation2.Task.BT.so",
+                    'default_source': "{0}/SYNO.DownloadStation2.Task.BT.so"
+                }
+            ]
+        }
+        thumbnail = {
+            'name': "Thumbnail",
+            'pre_source': "{0}/thumbnail",
+            'elements': [
+                {
+                    'name': "SYNO.DownloadStation2.Thumbnail.lib",
+                    'target': "{0}/SYNO.DownloadStation2.Thumbnail.lib",
+                    'mod': "644",
+                    'default_source': "{0}/SYNO.DownloadStation2.Thumbnail.lib"
+                }, {
+                    'name': "SYNO.DownloadStation2.Thumbnail.so",
+                    'target': "{0}/SYNO.DownloadStation2.Thumbnail.so",
+                    'default_source': "{0}/SYNO.DownloadStation2.Thumbnail.so"
+                }
+            ]
+        }
+
+        return {
+            'name': "WebApi",
+            'pre_target': "{0}/webapi",
+            'pre_source': "{0}/DownloadStation/webapiv5",
+            'elements': [
+                task_bt, thumbnail
+            ]
+        }
+
+    @staticmethod
+    def get_define_libs():
+        return {
+            'name': "Libs",
+            'pre_target': "{0}/lib",
+            'pre_source': "{0}/DownloadStation",
+            'mod': "644",
+            'elements': [
+                {
+                    'name': "libdownloaddb",
+                    'target': "{0}/libdownloaddb.so",
+                    'default_source': "{0}/libdownloaddb/libdownloaddb.so.1.0"
+                }, {
+                    'name': "libdownloaddomainsocket.so",
+                    'target': "{0}/libdownloaddomainsocket.so",
+                    'default_source': "{0}/lib/downloaddomainsocket/libdownloaddomainsocket.so"
+                }
+            ]
+        }
+
+    @staticmethod
+    def get_define_binary_tool():
+        return {
+            'name': "BinaryTool",
+            'pre_target': '{0}/bin',
+            'pre_source': "{0}/DownloadStation/tool",
+            'elements': [
+                {
+                    'name': "synorsstool",
+                    'target': "{0}/synorsstool",
+                    'default_source': "{0}/synorsstool"
+                }, {
+                    'name': "synodltransmissiondsocketdevtool",
+                    'target': "{0}/bin/synodltransmissiondsocketdevtool",
+                    'default_source': "{0}/DownloadStation/tool/transmissiondsocketdev/synodltransmissiondsocketdevtool"
+                }
+            ]
+        }
+
+    @staticmethod
+    def get_define_youtube():
+        return {
+            'name': "Youtube",
+            'pre_target': '{0}/plugins/youtube',
+            'elements': [
+                {
+                    'name': "youtube-dl",
+                    'target': "{0}/youtube-dl",
+                    'default_source': "{0}/youtube-dl/youtube-dl"
+                }, {
+                    'name': "youtube.php",
+                    'target': "{0}/phpsrc/youtube.php",
+                    'default_source': "{0}/DownloadStation/plugins/youtube/phpsrc/youtube.php.enc"
+                }
+            ]
+        }
+
+
+class NoteStationDefiner(Definer):
+    @staticmethod
+    def get_define():
+        return {
+            'name': "NoteStation",
+            'pre_target': "/var/packages/NoteStation/target",
+            'pre_source': "/volume1/mnt/source61",
+            'owner': "NoteStation:NoteStation",
+            'mod': "644",
+            'elements': [
+                {
+                    'name': "notestation.js",
+                    'target': "{0}/ui/notestation.js",
+                    'default_source': "{0}/NoteStation/ui/notestation.js"
+                },
+                NoteStationDefiner.get_define_tinymce()
+            ]
+        }
+
+    @staticmethod
+    def get_define_tinymce():
+        return {
+            'name': "TinymcePlugin",
+            'elements': [
+                {
+                    'name': "TinymcePluginOnNS",
+                    'pre_target': "{0}/ui/js/tinymce_plugins",
+                    'pre_source': "{0}/NoteStation/ui/js/tinymce_plugins",
+                    'elements': [
+                        {
+                            'name': "syno_textcolor",
+                            'target': "{0}/syno_textcolor/plugin.min.js",
+                            'default_source': "{0}/syno_textcolor/plugin.min.js"
+                        }, {
+                            'name': "syno_headingselect",
+                            'target': "{0}/syno_headingselect/plugin.min.js",
+                            'default_source': "{0}/syno_headingselect/plugin.min.js"
+                        }
+                    ]
+                }, {
+                    'name': "TinymcePluginOnTinymce",
+                    'elements': [
+                    ]
+                }
+            ]
+        }
+
+
+download_station = DownloadStationDefiner.get_define()
+note_station = NoteStationDefiner.get_define()
+
 map_define = [
-    {
-        'name': "DownloadStation",
-        'pre_target': "/var/packages/DownloadStation/target",
-        'pre_source': "/volume1/mnt/source",
-        'owner': "DownloadStation:DownloadStation",
-        'mod': "755",
-        'elements': [
-            {
-                'name': "TempDeving",
-                'elements': [
-                    {
-                        'name': "synodlekkotool",
-                        'target': "{0}/bin/synodlekkotool",
-                        'default_source': "{0}/DownloadStation/tool/ekko/synodlekkotool"
-                    }, {
-                        'name': "synodldsocketd",
-                        'target': "{0}/bin/synodldsocketd",
-                        'default_source': "{0}/DownloadStation/domain_socket_daemon/synodldsocketd"
-                    }
-                ]
-            }, {
-                'name': "download.js",
-                'target': "{0}/ui/download.js",
-                'mod': "644",
-                'default_source': "{0}/DownloadStation/ui/download.js"
-            }, {
-                'name': "Youtube",
-                'pre_target': '{0}/plugins/youtube',
-                'elements': [
-                    {
-                        'name': "youtube-dl",
-                        'target': "{0}/youtube-dl",
-                        'default_source': "{0}/youtube-dl/youtube-dl"
-                    }, {
-                        'name': "youtube.php",
-                        'target': "{0}/phpsrc/youtube.php",
-                        'default_source': "{0}/DownloadStation/plugins/youtube/phpsrc/youtube.php.enc"
-                    }
-                ]
-            }
-        ]
-    }, {
-        'name': "NoteStation",
-        'pre_target': "/var/packages/NoteStation/target",
-        'pre_source': "/volume1/mnt/source61",
-        'owner': "NoteStation:NoteStation",
-        'mod': "755",
-        'elements': [
-            {
-                'name': "notestation.js",
-                'target': "{0}/ui/notestation.js",
-                'default_source': "{0}/NoteStation/ui/notestation.js"
-            }
-        ]
-    }
+    download_station, note_station
 ]
