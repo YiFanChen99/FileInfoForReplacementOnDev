@@ -54,9 +54,19 @@ class DownloadStationDefiner(Definer):
                     'name': "lftp",
                     'target': "{0}/bin/lftp",
                     'default_source': "{0}/lftp-4.x-virtual-DownloadStation/src/lftp"
+                }, {
+                    'name': "wget",
+                    'target': "{0}/bin/wget",
+                    'default_source': "{0}/wget-1.10.1/src/wget"
+                }, {
+                    'name': "wget-spider",
+                    'target': "{0}/bin/wget-spider",
+                    'default_source': "{0}/wget-1.14.x/src/wget-spider"
                 },
                 DownloadStationDefiner.get_define_web_api(),
                 DownloadStationDefiner.get_define_libs(),
+                DownloadStationDefiner.get_define_hostscripts(),
+                DownloadStationDefiner.get_define_btsearch(),
                 DownloadStationDefiner.get_define_binary_tool(),
                 DownloadStationDefiner.get_define_youtube()
             ]
@@ -104,13 +114,29 @@ class DownloadStationDefiner(Definer):
                 }
             ]
         }
+        settings = {
+            'name': "Settings",
+            'pre_source': "{0}/settings",
+            'elements': [
+                {
+                    'name': "SYNO.DownloadStation2.Settings.lib",
+                    'target': "{0}/SYNO.DownloadStation2.Settings.lib",
+                    'mod': "644",
+                    'default_source': "{0}/SYNO.DownloadStation2.Settings.lib"
+                }, {
+                    'name': "SYNO.DownloadStation2.Settings.so",
+                    'target': "{0}/SYNO.DownloadStation2.Settings.so",
+                    'default_source': "{0}/SYNO.DownloadStation2.Settings.so"
+                }
+            ]
+        }
 
         return {
             'name': "WebApi",
             'pre_target': "{0}/webapi",
             'pre_source': "{0}/DownloadStation/webapiv5",
             'elements': [
-                task_bt, thumbnail
+                task_bt, thumbnail, settings
             ]
         }
 
@@ -131,6 +157,62 @@ class DownloadStationDefiner(Definer):
                     'target': "{0}/libdownloaddomainsocket.so",
                     'default_source': "{0}/lib/downloaddomainsocket/libdownloaddomainsocket.so"
                 }
+            ]
+        }
+
+    @staticmethod
+    def get_define_hostscripts():
+        hosts = {
+            'name': "Hosts",
+            'pre_target': "{0}/hosts",
+            'pre_source': "{0}/hosts",
+            'elements': [
+                {
+                    'name': "mega.php",
+                    'target': "{0}/mega/mega.php",
+                    'default_source': "{0}/mega/mega"
+                }, {
+                    'name': "mega.class.php",
+                    'target': "{0}/mega/lib/mega.class.php",
+                    'default_source': "{0}/mega/lib/mega.class"
+                }
+            ]
+        }
+        return {
+            'name': "Hostscript",
+            'pre_target': "{0}/hostscript",
+            'pre_source': "{0}/DownloadStation/hostscript",
+            'elements': [
+                {
+                    'name': "host.php",
+                    'target': "{0}/host.php",
+                    'default_source': "{0}/host"
+                },
+                hosts
+            ]
+        }
+
+    @staticmethod
+    def get_define_btsearch():
+        plugins = {
+            'name': "Plugins",
+            'pre_target': "{0}/plugins",
+            'pre_source': "{0}/plugins",
+            'mod': "644",
+            'elements': [
+                {
+                    'name': "bitsoup.php",
+                    'target': "{0}/bitsoup/search.php",
+                    'default_source': "{0}/bitsoup/search.php"
+                }
+            ]
+        }
+        return {
+            'name': "Btsearch",
+            'pre_target': "{0}/btsearch",
+            'pre_source': "{0}/DownloadStation/dlm/btsearch",
+            'elements': [
+                plugins
             ]
         }
 
