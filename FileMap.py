@@ -156,16 +156,49 @@ maps = FileMapRoot(map_define)
 
 
 def find_file(filename):
+    """ Return the corresponding FileMap or None.
+
+    >>> find_file('notestation.js')
+    notestation.js: { /var/packages/NoteStation/target/ui/notestation.js, NoteStation:NoteStation, 644 }
+
+    >>> find_file('wrong_filename_undefined')
+
+    """
     return maps.find_file(filename)
 
 
+def display_all():
+    info = maps.get_display_info()
+    print "Dev file maps:\n%s" % json.dumps(info, indent=3)
+
+
 def main(argv):
-    if len(argv) == 0 or (len(argv) == 1 and argv[0] == "all"):
-        info = maps.get_display_info()
-        print "Dev file maps:\n%s" % json.dumps(info, indent=3)
+    """
+    Display all defined files.
+    >>> main([])  # doctest: +SKIP
+    >>> main(["all"])  # doctest: +SKIP
+
+    Display corresponding file if matched. Display None otherwise.
+    >>> main(["notestation.js"])
+    notestation.js: { /var/packages/NoteStation/target/ui/notestation.js, NoteStation:NoteStation, 644 }
+    >>> main(["wrong_filename_undefined"])
+    None
+
+    Run doctest
+    >>> main(["test"])  # doctest: +SKIP
+    """
+
+    if len(argv) == 0:
+        display_all()
+
+    command = argv[0]
+    if (command == "test"):
+        import doctest
+        doctest.testmod(report=True)
+    elif (command == "all"):
+        display_all()
     else:
-        filename = argv[0]
-        file = find_file(filename)
+        file = find_file(command)
         print file
 
 
