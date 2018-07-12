@@ -195,6 +195,7 @@ def main(argv):
     if (command == "test"):
         import doctest
         doctest.testmod(report=True)
+        print "Complete doctest."
     elif (command == "all"):
         display_all()
     else:
