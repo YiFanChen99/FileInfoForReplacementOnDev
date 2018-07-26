@@ -190,6 +190,7 @@ def main(argv):
 
     if len(argv) == 0:
         display_all()
+        return
 
     command = argv[0]
     if (command == "test"):
