@@ -40,6 +40,7 @@ class DownloadStationDefiner(Definer):
                 {
                     'name': "download.js",
                     'target': "{0}/ui/download.js",
+                    'gz': "{0}/ui/download.js.gz",
                     'mod': "644",
                     'default_source': "{0}/DownloadStation/ui/download.js"
                 }, {
@@ -65,6 +66,7 @@ class DownloadStationDefiner(Definer):
                 }, {
                     'name': "style.css",
                     'target': "{0}/ui/style.css",
+                    'gz': "{0}/ui/style.css.gz",
                     'mod': "644",
                     'default_source': "{0}/DownloadStation/ui/style.css"
                 },

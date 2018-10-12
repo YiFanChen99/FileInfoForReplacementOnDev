@@ -124,7 +124,11 @@ class FileMapRoot(FileMapGroup):
 
 
 class FileMapFile(FileMap):
-    _extended_attr = ['target', 'default_source']
+    _extended_attr = {
+        'target': 'pre_target',
+        'gz': 'pre_target',
+        'default_source': 'pre_source'
+    }
     _overwritten_attr = ['owner', 'mod']
 
     def __init__(self, map_define, **kwargs):
@@ -133,10 +137,11 @@ class FileMapFile(FileMap):
         self._init_overwritten_attr(map_define, **kwargs)
 
     def _init_extended_attr(self, map_define, **kwargs):
-        for index, attr in enumerate(FileMapFile._extended_attr):
-            pre_arg_name = FileMapGroup._extended_attr[index]
-            pre_arg = kwargs.get(pre_arg_name, "")
-            setattr(self, attr, map_define[attr].format(pre_arg))
+        for attr, pre_attr in self._extended_attr.items():
+            if attr in map_define:
+                pre_arg = kwargs.get(pre_attr, "")
+                value = map_define[attr].format(pre_arg)
+                setattr(self, attr, value)
 
     def _init_overwritten_attr(self, map_define, **kwargs):
         for attr in FileMapFile._overwritten_attr:
