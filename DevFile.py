@@ -62,6 +62,11 @@ class DownloadStationDefiner(Definer):
                     'name': "wget-spider",
                     'target': "{0}/bin/wget-spider",
                     'default_source': "{0}/wget-1.14.x/src/wget-spider"
+                }, {
+                    'name': "style.css",
+                    'target': "{0}/ui/style.css",
+                    'mod': "644",
+                    'default_source': "{0}/DownloadStation/ui/style.css"
                 },
                 DownloadStationDefiner.get_define_web_api(),
                 DownloadStationDefiner.get_define_libs(),
@@ -130,13 +135,29 @@ class DownloadStationDefiner(Definer):
                 }
             ]
         }
+        btsearch = {
+            'name': "BtSearch",
+            'pre_source': "{0}/btsearch",
+            'elements': [
+                {
+                    'name': "SYNO.DownloadStation2.BTSearch.lib",
+                    'target': "{0}/SYNO.DownloadStation2.BTSearch.lib",
+                    'mod': "644",
+                    'default_source': "{0}/SYNO.DownloadStation2.BTSearch.lib"
+                }, {
+                    'name': "SYNO.DownloadStation2.BTSearch.so",
+                    'target': "{0}/SYNO.DownloadStation2.BTSearch.so",
+                    'default_source': "{0}/SYNO.DownloadStation2.BTSearch.so"
+                }
+            ]
+        }
 
         return {
             'name': "WebApi",
             'pre_target': "{0}/webapi",
             'pre_source': "{0}/DownloadStation/webapiv5",
             'elements': [
-                task_bt, thumbnail, settings
+                task_bt, thumbnail, settings, btsearch
             ]
         }
 
@@ -156,6 +177,18 @@ class DownloadStationDefiner(Definer):
                     'name': "libdownloaddomainsocket.so",
                     'target': "{0}/libdownloaddomainsocket.so",
                     'default_source': "{0}/lib/downloaddomainsocket/libdownloaddomainsocket.so"
+                }, {
+                    'name': "libsynodlupdate.so",
+                    'target': "{0}/libsynodlupdate.so",
+                    'default_source': "{0}/lib/update/libsynodlupdate.so"
+                }, {
+                    'name': "libsynodlbtsearch.so",
+                    'target': "{0}/libsynodlbtsearch.so",
+                    'default_source': "{0}/lib/btsearch/libsynodlbtsearch.so"
+                }, {
+                    'name': "libsynodlcommon.so",
+                    'target': "{0}/libsynodlcommon.so",
+                    'default_source': "{0}/lib/common/libsynodlcommon.so"
                 }
             ]
         }
@@ -212,6 +245,11 @@ class DownloadStationDefiner(Definer):
             'pre_target': "{0}/btsearch",
             'pre_source': "{0}/DownloadStation/dlm/btsearch",
             'elements': [
+                {
+                    'name': "btsearch.php",
+                    'target': "{0}/btsearch.php",
+                    'default_source': "{0}/encrypted/btsearch.php"
+                },
                 plugins
             ]
         }
