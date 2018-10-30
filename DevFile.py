@@ -269,8 +269,12 @@ class DownloadStationDefiner(Definer):
                     'default_source': "{0}/synorsstool"
                 }, {
                     'name': "synodltransmissiondsocketdevtool",
-                    'target': "{0}/bin/synodltransmissiondsocketdevtool",
-                    'default_source': "{0}/DownloadStation/tool/transmissiondsocketdev/synodltransmissiondsocketdevtool"
+                    'target': "{0}/synodltransmissiondsocketdevtool",
+                    'default_source': "{0}/transmissiondsocketdev/synodltransmissiondsocketdevtool"
+                }, {
+                    'name': "synodlmaxtaskslimittool",
+                    'target': "{0}/synodlmaxtaskslimittool",
+                    'default_source': "{0}/maxtaskslimit/synodlmaxtaskslimittool"
                 }
             ]
         }
