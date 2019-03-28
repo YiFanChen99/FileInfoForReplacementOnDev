@@ -443,6 +443,6 @@ class NoteStationDefiner(Definer):
 download_station = DownloadStationDefiner.get_define()
 note_station = NoteStationDefiner.get_define()
 
-map_define = [
-    download_station, note_station
-]
+map_define = []
+map_define.append(download_station)
+map_define.append(note_station)
