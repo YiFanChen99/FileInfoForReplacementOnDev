@@ -69,13 +69,25 @@ class DownloadStationDefiner(Definer):
                     'gz': "{0}/ui/style.css.gz",
                     'mod': "644",
                     'default_source': "{0}/DownloadStation/ui/style.css"
+                }, {
+                    'name': "nzbget",
+                    'target': "{0}/bin/nzbget",
+                    'default_source': "{0}/nzbget-0.7.0/nzbget"
+                }, {
+                    'name': "downloadman.cgi",
+                    'target': "{0}/ui/dlm/downloadman.cgi",
+                    'default_source': "{0}/DownloadStation/dlm/downloadman.cgi",
+                    'owner': "root:root",
+                    'mod': "750",
                 },
                 DownloadStationDefiner.get_define_web_api(),
                 DownloadStationDefiner.get_define_libs(),
                 DownloadStationDefiner.get_define_hostscripts(),
                 DownloadStationDefiner.get_define_btsearch(),
                 DownloadStationDefiner.get_define_binary_tool(),
-                DownloadStationDefiner.get_define_youtube()
+                DownloadStationDefiner.get_define_youtube(),
+                DownloadStationDefiner.get_define_hyperbackup(),
+                DownloadStationDefiner.get_define_plugins(),
             ]
         }
 
@@ -153,13 +165,29 @@ class DownloadStationDefiner(Definer):
                 }
             ]
         }
+        task = {
+            'name': "Task",
+            'pre_source': "{0}/task",
+            'elements': [
+                {
+                    'name': "SYNO.DownloadStation2.Task.lib",
+                    'target': "{0}/SYNO.DownloadStation2.Task.lib",
+                    'mod': "644",
+                    'default_source': "{0}/SYNO.DownloadStation2.Task.lib"
+                }, {
+                    'name': "SYNO.DownloadStation2.Task.so",
+                    'target': "{0}/SYNO.DownloadStation2.Task.so",
+                    'default_source': "{0}/SYNO.DownloadStation2.Task.so"
+                }
+            ]
+        }
 
         return {
             'name': "WebApi",
             'pre_target': "{0}/webapi",
             'pre_source': "{0}/DownloadStation/webapiv5",
             'elements': [
-                task_bt, thumbnail, settings, btsearch
+                task_bt, thumbnail, settings, btsearch, task
             ]
         }
 
@@ -191,6 +219,10 @@ class DownloadStationDefiner(Definer):
                     'name': "libsynodlcommon.so",
                     'target': "{0}/libsynodlcommon.so",
                     'default_source': "{0}/lib/common/libsynodlcommon.so"
+                }, {
+                    'name': "libsynodlcore.so",
+                    'target': "{0}/libsynodlcore.so",
+                    'default_source': "{0}/lib/core/libsynodlcore.so"
                 }
             ]
         }
@@ -230,7 +262,7 @@ class DownloadStationDefiner(Definer):
     @staticmethod
     def get_define_btsearch():
         plugins = {
-            'name': "Plugins",
+            'name': "BtSearchPlugins",
             'pre_target': "{0}/plugins",
             'pre_source': "{0}/plugins",
             'mod': "644",
@@ -275,6 +307,14 @@ class DownloadStationDefiner(Definer):
                     'name': "synodlmaxtaskslimittool",
                     'target': "{0}/synodlmaxtaskslimittool",
                     'default_source': "{0}/maxtaskslimit/synodlmaxtaskslimittool"
+                }, {
+                    'name': "synodlvolumechecktool",
+                    'target': "{0}/synodlvolumechecktool",
+                    'default_source': "{0}/volumecheck/synodlvolumechecktool"
+                }, {
+                    'name': "synodlupdate",
+                    'target': "{0}/synodlupdate",
+                    'default_source': "{0}/update/synodlupdate"
                 }
             ]
         }
@@ -293,6 +333,60 @@ class DownloadStationDefiner(Definer):
                     'name': "youtube.php",
                     'target': "{0}/phpsrc/youtube.php",
                     'default_source': "{0}/DownloadStation/plugins/youtube/phpsrc/youtube.php.enc"
+                }
+            ]
+        }
+
+    @staticmethod
+    def get_define_hyperbackup():
+        return {
+            'name': "Backup",
+            'pre_target': "/var/packages/DownloadStation/scripts/backup/2.x",
+            'pre_source': "{0}/DownloadStation/hyperbackup/2.x",
+            'owner': "root:root",
+            'mod': "700",
+            'elements': [
+                {
+                    'name': "import",
+                    'target': "{0}/import",
+                    'default_source': "{0}/import"
+                }, {
+                    'name': "export",
+                    'target': "{0}/export",
+                    'default_source': "{0}/export"
+                }, {
+                    'name': "can_import",
+                    'target': "{0}/can_import",
+                    'default_source': "{0}/can_import"
+                }, {
+                    'name': "can_export",
+                    'target': "{0}/can_export",
+                    'default_source': "{0}/can_export"
+                }, {
+                    'name': "estimate_exportion",
+                    'target': "{0}/estimate_exportion",
+                    'default_source': "{0}/estimate_exportion"
+                }, {
+                    'name': "summary",
+                    'target': "{0}/summary",
+                    'default_source': "{0}/summary"
+                }
+            ]
+        }
+
+    @staticmethod
+    def get_define_plugins():
+        return {
+            'name': "Plugins",
+            'pre_target': "/var/packages/DownloadStation/target/plugins",
+            'pre_source': "{0}/DownloadStation/plugins",
+            'owner': "DownloadStation:DownloadStation",
+            'mod': "644",
+            'elements': [
+                {
+                    'name': "move",
+                    'target': "{0}/move/move.so",
+                    'default_source': "{0}/move/move.so"
                 }
             ]
         }
