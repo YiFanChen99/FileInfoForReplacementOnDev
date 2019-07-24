@@ -48,9 +48,17 @@ class DownloadStationDefiner(Definer):
                     'target': "{0}/sbin/scheduler",
                     'default_source': "{0}/DownloadStation/scheduler/scheduler"
                 }, {
+                    'name': "synodlscheduler",
+                    'target': "{0}/sbin/synodlscheduler",
+                    'default_source': "{0}/DownloadStation/scheduler/synodlscheduler"
+                }, {
                     'name': "transmissiond",
                     'target': "{0}/sbin/transmissiond",
                     'default_source': "{0}/transmission-2.8x/daemon/transmission-daemon"
+                }, {
+                    'name': "amuled",
+                    'target': "{0}/sbin/amuled",
+                    'default_source': "{0}/aMule-2.3.x/src/amuled"
                 }, {
                     'name': "lftp",
                     'target': "{0}/bin/lftp",
@@ -58,6 +66,10 @@ class DownloadStationDefiner(Definer):
                 }, {
                     'name': "wget",
                     'target': "{0}/bin/wget",
+                    'default_source': "{0}/wget-1.10.1/src/wget"
+                }, {
+                    'name': "synodlwget",
+                    'target': "{0}/bin/synodlwget",
                     'default_source': "{0}/wget-1.10.1/src/wget"
                 }, {
                     'name': "wget-spider",
@@ -72,6 +84,10 @@ class DownloadStationDefiner(Definer):
                 }, {
                     'name': "nzbget",
                     'target': "{0}/bin/nzbget",
+                    'default_source': "{0}/nzbget-0.7.0/nzbget"
+                }, {
+                    'name': "synodlnzbget",
+                    'target': "{0}/bin/synodlnzbget",
                     'default_source': "{0}/nzbget-0.7.0/nzbget"
                 }, {
                     'name': "downloadman.cgi",
@@ -223,6 +239,26 @@ class DownloadStationDefiner(Definer):
                     'name': "libsynodlcore.so",
                     'target': "{0}/libsynodlcore.so",
                     'default_source': "{0}/lib/core/libsynodlcore.so"
+                }, {
+                    'name': "libdownloadtask.so",
+                    'target': "{0}/libdownloadtask.so",
+                    'default_source': "{0}/lib/libdownloadtask.so"
+                }, {
+                    'name': "libsynodlrss.so",
+                    'target': "{0}/libsynodlrss.so",
+                    'default_source': "{0}/lib/libsynodlrss.so"
+                }, {
+                    'name': "libmonitorscheduler.so",
+                    'target': "{0}/libmonitorscheduler.so",
+                    'default_source': "{0}/lib/monitor/libmonitorscheduler.so"
+                }, {
+                    'name': "libmonitortransmission.so",
+                    'target': "{0}/libmonitortransmission.so",
+                    'default_source': "{0}/lib/monitor/libmonitortransmission.so"
+                }, {
+                    'name': "libsynodlsynohost.so",
+                    'target': "{0}/libsynodlsynohost.so",
+                    'default_source': "{0}/lib/libsynodlsynohost.so"
                 }
             ]
         }
@@ -242,6 +278,10 @@ class DownloadStationDefiner(Definer):
                     'name': "mega.class.php",
                     'target': "{0}/mega/lib/mega.class.php",
                     'default_source': "{0}/mega/lib/mega.class"
+                }, {
+                    'name': "gofileme.php",
+                    'target': "{0}/gofile.me/gofileme.php",
+                    'default_source': "{0}/gofile.me/gofileme.php"
                 }
             ]
         }
