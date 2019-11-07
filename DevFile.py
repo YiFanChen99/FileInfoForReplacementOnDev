@@ -259,6 +259,10 @@ class DownloadStationDefiner(Definer):
                     'name': "libsynodlsynohost.so",
                     'target': "{0}/libsynodlsynohost.so",
                     'default_source': "{0}/lib/libsynodlsynohost.so"
+                }, {
+                    'name': "libsynodluseraccount.so",
+                    'target': "{0}/libsynodluseraccount.so",
+                    'default_source': "{0}/lib/useraccount/libsynodluseraccount.so"
                 }
             ]
         }
@@ -273,11 +277,11 @@ class DownloadStationDefiner(Definer):
                 {
                     'name': "mega.php",
                     'target': "{0}/mega/mega.php",
-                    'default_source': "{0}/mega/mega"
+                    'default_source': "{0}/mega/mega.php"
                 }, {
                     'name': "mega.class.php",
                     'target': "{0}/mega/lib/mega.class.php",
-                    'default_source': "{0}/mega/lib/mega.class"
+                    'default_source': "{0}/mega/lib/mega.class.php"
                 }, {
                     'name': "gofileme.php",
                     'target': "{0}/gofile.me/gofileme.php",
@@ -293,7 +297,15 @@ class DownloadStationDefiner(Definer):
                 {
                     'name': "host.php",
                     'target': "{0}/host.php",
-                    'default_source': "{0}/host"
+                    'default_source': "{0}/host.php"
+                }, {
+                    'name': "encrypt.php",
+                    'target': "{0}/encrypt.php",
+                    'default_source': "{0}/encrypt.php"
+                }, {
+                    'name': "account.php",
+                    'target': "{0}/account.php",
+                    'default_source': "{0}/account.php"
                 },
                 hosts
             ]
@@ -320,9 +332,13 @@ class DownloadStationDefiner(Definer):
             'pre_source': "{0}/DownloadStation/dlm/btsearch",
             'elements': [
                 {
-                    'name': "btsearch.php",
+                    'name': "btsearch.php6.2",
                     'target': "{0}/btsearch.php",
                     'default_source': "{0}/encrypted/btsearch.php"
+                }, {
+                    'name': "btsearch.php7.0",
+                    'target': "{0}/btsearch.php",
+                    'default_source': "{0}/btsearch.php"
                 },
                 plugins
             ]
